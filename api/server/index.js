@@ -64,6 +64,15 @@ let serverReady = false;
 const SERVER_NOT_READY_CODE = 'SERVER_NOT_READY';
 const CHAT_START_RETRY_AFTER_SECONDS = '1';
 
+const getWorkspaceOrigin = () => {
+  try {
+    const origin = process.env.WORKSPACE_ORIGIN;
+    return origin ? new URL(origin).origin : null;
+  } catch {
+    return null;
+  }
+};
+
 const rejectChatStartsUntilReady = (req, res, next) => {
   if (serverReady || req.method !== 'POST' || req.path === '/abort') {
     return next();
@@ -279,6 +288,15 @@ const startServer = async () => {
 
   /** 404 for unmatched API routes */
   app.use('/api', apiNotFound);
+
+  app.get(['/login', '/login/*path', '/register', '/register/*path'], (req, res, next) => {
+    const workspaceOrigin = getWorkspaceOrigin();
+    if (!workspaceOrigin) {
+      return next();
+    }
+
+    return res.redirect(workspaceOrigin);
+  });
 
   /** SPA fallback - serve index.html for all unmatched routes */
   app.use(createSpaFallback(sendIndexHtml));

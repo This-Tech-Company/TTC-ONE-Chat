@@ -57,6 +57,7 @@ const namespaces = {
     CacheKeys.ADMIN_OAUTH_EXCHANGE,
     Time.THIRTY_SECONDS,
   ),
+  [CacheKeys.WORKSPACE_LAUNCH_JTI]: standardCache(CacheKeys.WORKSPACE_LAUNCH_JTI, Time.TWO_MINUTES),
 };
 
 /**
