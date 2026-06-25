@@ -34,11 +34,25 @@ function getLaunchErrorStatus(error) {
 }
 
 function getSafeRedirectPath(value) {
-  if (typeof value !== 'string' || !value.startsWith('/') || value.startsWith('//')) {
+  if (
+    typeof value !== 'string' ||
+    !value.startsWith('/') ||
+    value.startsWith('//') ||
+    value.startsWith('/\\')
+  ) {
     return '/';
   }
 
-  return value;
+  try {
+    const parsed = new URL(value, 'http://placeholder.invalid');
+    if (parsed.origin !== 'http://placeholder.invalid') {
+      return '/';
+    }
+
+    return parsed.pathname + parsed.search + parsed.hash;
+  } catch {
+    return '/';
+  }
 }
 
 function getUsername(payload) {
