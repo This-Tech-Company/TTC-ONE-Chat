@@ -1,0 +1,42 @@
+# TTC One — Chat (LibreChat) configuration
+# Docs: https://www.librechat.ai/docs/configuration/librechat_yaml
+#
+# This file is loaded automatically from the repo root (CONFIG_PATH overrides it).
+# It only sets the feature flags we want to control; every other LibreChat
+# setting stays at its built-in default.
+
+# Configuration version (required)
+version: 1.3.13
+
+# Cache settings: Set to true to enable caching
+cache: true
+
+# ---------------------------------------------------------------------------
+# Feature flags (TTC One)
+#
+# These are LibreChat's NATIVE interface toggles. They apply GLOBALLY to every
+# Chat user. Set a flag to `false` to hide that feature, `true` to show it.
+# After editing, restart the Chat backend for changes to take effect.
+#
+# Features that LibreChat has NO native toggle for are intentionally NOT listed
+# here (we are not adding custom controllers for them):
+#   - Chat history / conversation list in the sidebar  -> always visible
+#   - Attached files / the file-upload button          -> always available
+#     (note: `fileSearch` below is the separate "File Search" chat-area tool,
+#      not the general attach-files button.)
+# ---------------------------------------------------------------------------
+interface:
+  # Agent builder (create/use AI agents)
+  agents: false
+  # Skills library
+  skills: false
+  # "Forms" -> LibreChat saved prompt templates
+  prompts: false
+  # Memories / personalization
+  memories: true
+  # Bookmarks on conversations
+  bookmarks: false
+  # Conversation presets dropdown
+  presets: false
+  # Multi-conversation (chat with multiple endpoints side by side)
+  multiConvo: true
