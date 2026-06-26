@@ -51,6 +51,11 @@ export default defineConfig(({ command }) => ({
     host: process.env.HOST || 'localhost',
     port: (process.env.PORT && Number(process.env.PORT)) || 3090,
     strictPort: false,
+    // [TTC unify] Allow importing the shared token contract at the repo root
+    // (/design), which lives above this app's monorepo root.
+    fs: {
+      allow: [path.resolve(__dirname, '../../..')],
+    },
     proxy: {
       '/api': {
         target: backendURL,
@@ -137,8 +142,8 @@ export default defineConfig(({ command }) => ({
       },
       includeAssets: [],
       manifest: {
-        name: 'LibreChat',
-        short_name: 'LibreChat',
+        name: 'TTC - Chat',
+        short_name: 'TTC - Chat',
         display: 'standalone',
         background_color: '#000000',
         theme_color: '#009688',

@@ -1,5 +1,16 @@
 // const { fontFamily } = require('tailwindcss/defaultTheme');
 
+/**
+ * [TTC unify] Shared TTC One tokens are full OKLCH color values (see
+ * /design/tokens.css). This helper lets Tailwind opacity modifiers (e.g.
+ * bg-primary/10) keep working on an opaque CSS-variable color by mixing it
+ * with transparent via color-mix — Tailwind v3 otherwise drops the modifier.
+ */
+const withAlpha = (cssVar) => ({ opacityValue }) =>
+  opacityValue === undefined
+    ? `var(${cssVar})`
+    : `color-mix(in oklab, var(${cssVar}) calc(${opacityValue} * 100%), transparent)`;
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -11,7 +22,8 @@ module.exports = {
   darkMode: ['class'],
   theme: {
     fontFamily: {
-      sans: ['Inter', 'sans-serif'],
+      // [TTC unify] Geist Variable is the family font (Inter kept as fallback).
+      sans: ['Geist Variable', 'Inter', 'sans-serif'],
       mono: ['Roboto Mono', 'monospace'],
     },
     // fontFamily: {
@@ -126,36 +138,37 @@ module.exports = {
         'border-heavy': 'var(--border-heavy)',
         'border-xheavy': 'var(--border-xheavy)',
         'border-destructive': 'var(--border-destructive)',
-        /* These are test styles */
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ['switch-unchecked']: 'hsl(var(--switch-unchecked))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        /* [TTC unify] Shared TTC One tokens are full OKLCH colors consumed via
+           var() (was hsl(var(--x))). withAlpha keeps opacity modifiers working. */
+        border: withAlpha('--border'),
+        input: withAlpha('--input'),
+        ['switch-unchecked']: withAlpha('--switch-unchecked'),
+        ring: withAlpha('--ring'),
+        background: withAlpha('--background'),
+        foreground: withAlpha('--foreground'),
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: withAlpha('--primary'),
+          foreground: withAlpha('--primary-foreground'),
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
+          DEFAULT: withAlpha('--secondary'),
+          foreground: withAlpha('--secondary-foreground'),
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: withAlpha('--destructive'),
+          foreground: withAlpha('--destructive-foreground'),
         },
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+          DEFAULT: withAlpha('--muted'),
+          foreground: withAlpha('--muted-foreground'),
         },
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: withAlpha('--accent'),
+          foreground: withAlpha('--accent-foreground'),
         },
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: withAlpha('--card'),
+          foreground: withAlpha('--card-foreground'),
         },
       },
       borderRadius: {

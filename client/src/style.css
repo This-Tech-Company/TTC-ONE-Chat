@@ -228,6 +228,13 @@ html {
   color: var(--text-tertiary);
 }
 
+/* [TTC unify] Unified default icon stroke (shared with Workspace via
+   --icon-stroke). Zero-specificity :where() so the explicit .icon-* strokes
+   below still win. */
+:where(svg.lucide) {
+  stroke-width: var(--icon-stroke, 1.75);
+}
+
 .icon-xs {
   stroke-width: 1.5;
   height: 0.75rem;

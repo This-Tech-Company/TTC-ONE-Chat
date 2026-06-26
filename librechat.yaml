@@ -26,6 +26,7 @@ cache: true
 #      not the general attach-files button.)
 # ---------------------------------------------------------------------------
 interface:
+  customWelcome: "Welcome to TTC - Chat."
   # Agent builder (create/use AI agents)
   agents: false
   # Skills library
